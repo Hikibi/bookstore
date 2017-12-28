@@ -1,0 +1,118 @@
+/*管理员表*/
+CREATE TABLE tb_admin(
+  uid CHAR(32) PRIMARY KEY,/*主键*/
+  username VARCHAR(50) NOT NULL,/*用户名*/
+  `password` VARCHAR(50) NOT NULL,/*密码*/
+  FOREIGN KEY (uid) REFERENCES tb_user (uid)/*建立主外键关系*/
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <title>登录</title>
+
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	  <style>
+
+		  body{
+			  background-image: url("../../images/bg5.jpg");
+
+		  }
+		  #div1{
+
+			  color: #ffffff;
+			  height: 300px;
+			  width: 400px;
+			  background-color: rgba(68, 63, 63, 0.52);
+			  position: fixed;
+			  top: 300px;
+			  right: 100px
+
+		  }
+		  #div2{
+			  background-image: url("../../images/flower2.png");
+		  }
+
+		  input {
+			  width: 225px;
+			  height: 30px;
+			  padding-left: 0;
+			  color: #1c1c1c;
+			  border: none;
+			  font-size: 16px;
+			  font-weight: bold;
+			  line-height: 30px;
+		  }
+
+	  </style>
+
+  </head>
+
+  <body>
+
+  <div id="div2">
+  <%-- 登录是一个登录的界面,登录成功会跳转回之前的main.jsp(top,left,body.jsp)
+  		当跳转回到主页之后,需要将用户的用户名显示出来,并且匹配数据库
+  		用户的数据库中不仅包含注册信息,还有购买,订单,购物车信息.
+
+  		问题1: 目前的代码 点击完登录直接就登录到main.jsp?
+  		答: 目前代码没有实现相关功能.只实现了跳转到主页
+  		需要写点什么进行改变.
+
+
+  		--%>
+<img src="../../images/person.png" >
+<div id="div1">
+
+
+<h3>用户登录</h3>
+<form action="${pageContext.request.contextPath}/UserServlet" method="post">
+	<input type="hidden" name="method" value="login">
+	<br>
+	<br>
+	<center>
+	用户名：<input type="text" name="username"/>
+	<br>
+	<b style="color:#ff6775;font-size: 13px">${error}</b>
+	<br/>
+	密　码：<input type="password" name="password"/>
+	<br/><br>
+	<br>
+	<br>
+
+	<input type="submit" value="登录"/>
+	</center>
+</form>
+	</div>
+</div>
+
+  </body>
+</html>

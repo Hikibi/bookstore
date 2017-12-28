@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <filter>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>com.lanou.bookstore.filter.UserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.lanou.bookstore.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/adminjsps/admin/*</url-pattern>
+        <!--<dispatcher>ERROR</dispatcher>-->
+    </filter-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>AdminFilter</filter-name>-->
+        <!--<filter-class>com.lanou.bookstore.filter.AdminFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>AdminFilter</filter-name>-->
+        <!--<url-pattern>/adminjsps/admin/*</url-pattern>-->
+        <!--&lt;!&ndash;<dispatcher>ERROR</dispatcher>&ndash;&gt;-->
+    <!--</filter-mapping>-->
+
+
+
+    <!--ALTER TABLE category ADD del BOOLEAN;-->
+    <!--ALTER TABLE book ADD del BOOLEAN;-->
+
+</web-app>
