@@ -39,5 +39,8 @@
 	<input type="submit" value="注册"/>
 </form>
   </div>
+
+  <a href="../../小游戏.jsp">不如打把游戏??</a>
+
   </body>
 </html>

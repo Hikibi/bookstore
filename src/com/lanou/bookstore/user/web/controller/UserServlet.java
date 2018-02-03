@@ -1,27 +1,22 @@
 package com.lanou.bookstore.user.web.controller;
 
 import com.lanou.bookstore.CartItem.Cart;
-import com.lanou.bookstore.CartItem.Cartltem;
 import com.lanou.bookstore.user.domain.User;
 import com.lanou.bookstore.user.service.UserJudge;
-import com.lanou.bookstore.user.service.UserService;
 import com.lanou.bookstore.user.service.impl.UserServiceImpl;
 import com.lanou.commons.CommonUtils;
 import com.lanou.servlet.BaseServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Created by dllo on 17/9/21.
+ * Created by dllo on 18/9/21.
  */
 @WebServlet("/UserServlet")
 public class UserServlet extends BaseServlet implements Serializable {
@@ -92,10 +87,11 @@ public class UserServlet extends BaseServlet implements Serializable {
 
 //                创建的购物车名字为 用户名
                 request.getSession().setAttribute(u.getUsername(), cart);
-                return "r:/index.jsp";
+                return "r:/jsps/main.jsp";
+
             }
 
-            return "r:/index.jsp";
+            return "r:/jsps/main.jsp";
         }
 
     }

@@ -12,23 +12,15 @@ import com.lanou.commons.CommonUtils;
 import com.lanou.mail.Mail;
 import com.lanou.mail.MailUtils;
 import com.lanou.servlet.BaseServlet;
-import org.junit.Test;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 /**
  * Created by dllo on 17/9/22.
@@ -104,6 +96,7 @@ public class OrderServlet extends BaseServlet {
         orderService.add(orders);
 
         Iterator<Cartltem> iterator = cartMap.values().iterator();
+
         while (iterator.hasNext()) {
 
             Cartltem next = iterator.next();
@@ -133,28 +126,25 @@ public class OrderServlet extends BaseServlet {
         System.out.println(orderitem.getBid());
 
 
+        List<CountAndBooks> list = orderService.toOid(orders.getOid());
 
+        for (CountAndBooks l : list) {
 
-            List<CountAndBooks> list = orderService.toOid(orders.getOid());
+            bookShow.add(l);
 
-            for (CountAndBooks l : list) {
+        }
 
-                bookShow.add(l);
+        request.setAttribute("orders", orders);
 
-            }
+        request.setAttribute("bookShow", bookShow);
 
-            request.setAttribute("orders", orders);
+        request.getSession().removeAttribute(username);
 
-            request.setAttribute("bookShow", bookShow);
+        cart.setCartMap(new HashMap<>());
 
-            request.getSession().removeAttribute(username);
+        request.getSession().setAttribute(username, cart);
 
-            cart.setCartMap(new HashMap<>());
-
-
-            request.getSession().setAttribute(username, cart);
-
-            return "f:/jsps/order/desc.jsp";
+        return "f:/jsps/order/desc.jsp";
 
     }
 
@@ -246,32 +236,27 @@ public class OrderServlet extends BaseServlet {
 
     }
 
-//    发送邮件给购买用户
-private void sendMail(String email, String username) {
-    try {
-        Session session = MailUtils.createSession("smtp.163.com", "15842209819@163.com", "xxl101354@");
-        Mail mail = new Mail("15842209819@163.com", email, "BookStore Support",
+    //    发送邮件给购买用户
+    private void sendMail(String email, String username) {
+        try {
+            Session session = MailUtils.createSession("smtp.163.com", "15842209819@163.com", "xxl101354@");
+            Mail mail = new Mail("15842209819@163.com", email, "BookStore Support",
 
-                "<div style=\"background: #17212e\">" + "<div style=\"padding-top: 32px\"></div>" +
-                "<div style=\"font-family: Helvetica, Arial, sans-serif;font-size: 24px;color: #66c0f4;font-weight: bold;\">" +
-                "Hello  " + username + "</div>" +
-                "<div style=\"color: #c6d4df; font-size: 15px\">" + "Thank you for your recent transaction on BookStore." + "</div>" +
-                "<div style=\"color: #c6d4df; font-size: 15px\">" + "The items below have been added to your BookStore Library.\n" + "</div>" +
-                "<div style=\"color: #c6d4df; font-size: 15px\">" + "If you are new to BookStore, you can get the free BookStore application " +
-                "<a href='http://localhost:8080'>here.</a>" + "</div>" + "<div style=\"padding-bottom: 50px\"></div>" + "</div>");
+                    "<div style=\"background: #17212e\">" + "<div style=\"padding-top: 32px\"></div>" +
+                            "<div style=\"font-family: Helvetica, Arial, sans-serif;font-size: 24px;color: #66c0f4;font-weight: bold;\">" +
+                            "Hello  " + username + "</div>" +
+                            "<div style=\"color: #c6d4df; font-size: 15px\">" + "Thank you for your recent transaction on BookStore." + "</div>" +
+                            "<div style=\"color: #c6d4df; font-size: 15px\">" + "The items below have been added to your BookStore Library.\n" + "</div>" +
+                            "<div style=\"color: #c6d4df; font-size: 15px\">" + "If you are new to BookStore, you can get the free BookStore application " +
+                            "<a href='http://localhost:8080'>here.</a>" + "</div>" + "<div style=\"padding-bottom: 50px\"></div>" + "</div>");
 
-        MailUtils.send(session, mail);
-    } catch (MessagingException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
+            MailUtils.send(session, mail);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
-
-
-
-
-
 
 
     public String end(HttpServletRequest request, HttpServletResponse response)
